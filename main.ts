@@ -5,31 +5,27 @@ import data from "./data.json" assert { type: "json" };
 const router = new Router();
 router
   .get("/", (context) => {
-    context.response.body = JSON.stringify(
-      {
-        type: "list",
-        items: data.map((dinosaur) => ({
-          title: dinosaur.name,
-          subtitle: dinosaur.description,
-          actions: [
-            {
-              type: "push",
-              page: {
-                url: `/dinosaur/${dinosaur.name}`,
-              },
+    context.response.body = {
+      type: "list",
+      items: data.map((dinosaur) => ({
+        title: dinosaur.name,
+        subtitle: dinosaur.description,
+        actions: [
+          {
+            type: "push",
+            page: {
+              url: `/dinosaur/${dinosaur.name}`,
             },
-            { type: "copy", title: "Copy Name", text: dinosaur.name },
-            {
-              type: "copy",
-              title: "Copy Description",
-              text: dinosaur.description,
-            },
-          ],
-        })),
-      },
-      null,
-      2
-    );
+          },
+          { type: "copy", title: "Copy Name", text: dinosaur.name },
+          {
+            type: "copy",
+            title: "Copy Description",
+            text: dinosaur.description,
+          },
+        ],
+      })),
+    };
   })
   .get("/dinosaur/:name", (context) => {
     const { name } = context.params;
@@ -44,26 +40,22 @@ router
       return;
     }
 
-    context.response.body = JSON.stringify(
-      {
-        type: "detail",
-        preview: dinosaur.description,
-        actions: [
-          {
-            type: "copy",
-            title: "Copy Name",
-            text: dinosaur.name,
-          },
-          {
-            type: "copy",
-            title: "Copy Description",
-            text: dinosaur.description,
-          },
-        ],
-      },
-      null,
-      2
-    );
+    context.response.body = {
+      type: "detail",
+      preview: dinosaur.description,
+      actions: [
+        {
+          type: "copy",
+          title: "Copy Name",
+          text: dinosaur.name,
+        },
+        {
+          type: "copy",
+          title: "Copy Description",
+          text: dinosaur.description,
+        },
+      ],
+    };
   });
 
 const app = new Application();
