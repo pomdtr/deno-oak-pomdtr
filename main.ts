@@ -5,20 +5,26 @@ import data from "./data.json" assert { type: "json" };
 const router = new Router();
 router
   .get("/", (context) => {
-    context.response.body = JSON.stringify({
-      "type": "list",
-      "items": data.map(dinosaur => ({
-        title: dinosaur.name
-      }))
-    }, null, 2)
+    context.response.body = JSON.stringify(
+      {
+        type: "list",
+        items: data.map((dinosaur) => ({
+          title: dinosaur.name,
+          subtitle: dinosaur.description,
+        })),
+      },
+      null,
+      2
+    );
   })
   .get("/api", (context) => {
     context.response.body = data;
   })
   .get("/api/:dinosaur", (context) => {
     if (context?.params?.dinosaur) {
-      const found = data.find((item) =>
-        item.name.toLowerCase() === context.params.dinosaur.toLowerCase()
+      const found = data.find(
+        (item) =>
+          item.name.toLowerCase() === context.params.dinosaur.toLowerCase()
       );
       if (found) {
         context.response.body = found;
