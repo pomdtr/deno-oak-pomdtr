@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sunbeam fetch https://deno-oak-pomdtr.deno.dev
