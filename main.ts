@@ -11,6 +11,14 @@ router
         items: data.map((dinosaur) => ({
           title: dinosaur.name,
           subtitle: dinosaur.description,
+          actions: [
+            { type: "copy", title: "Copy Name", text: dinosaur.name },
+            {
+              type: "copy",
+              title: "Copy Description",
+              text: dinosaur.description,
+            },
+          ],
         })),
       },
       null,
