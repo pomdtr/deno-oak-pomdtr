@@ -1,5 +1,6 @@
 import { Application, Router } from "https://deno.land/x/oak@v11.1.0/mod.ts";
 import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
+import { Page } from "https://deno.land/x/sunbeam@v1.0.0-rc.12/index.d.ts";
 import data from "./data.json" assert { type: "json" };
 
 const router = new Router();
@@ -7,24 +8,28 @@ router
   .get("/", (context) => {
     context.response.body = {
       type: "list",
-      items: data.map((dinosaur) => ({
-        title: dinosaur.name,
-        subtitle: dinosaur.description,
-        actions: [
-          {
-            type: "push",
-            page: {
-              url: `/dinosaur/${dinosaur.name}`,
-            },
-          },
-          { type: "copy", title: "Copy Name", text: dinosaur.name },
-          {
-            type: "copy",
-            title: "Copy Description",
-            text: dinosaur.description,
-          },
-        ],
-      })),
+      items: data.map(
+        (dinosaur) =>
+          ({
+            type: "list",
+            title: dinosaur.name,
+            subtitle: dinosaur.description,
+            actions: [
+              {
+                type: "push",
+                page: {
+                  url: `/dinosaur/${dinosaur.name}`,
+                },
+              },
+              { type: "copy", title: "Copy Name", text: dinosaur.name },
+              {
+                type: "copy",
+                title: "Copy Description",
+                text: dinosaur.description,
+              },
+            ],
+          } as Page)
+      ),
     };
   })
   .get("/dinosaur/:name", (context) => {
@@ -32,11 +37,8 @@ router
     const dinosaur = data.find((dinosaur) => dinosaur.name === name);
     if (!dinosaur) {
       context.response.status = 404;
-      context.response.body = JSON.stringify(
-        { error: "Dinosaur not found" },
-        null,
-        2
-      );
+      context.response.body = { error: "Dinosaur not found" };
+
       return;
     }
 
@@ -55,7 +57,7 @@ router
           text: dinosaur.description,
         },
       ],
-    };
+    } as Page;
   });
 
 const app = new Application();
