@@ -1,6 +1,6 @@
 # REST API
 
-A template of REST API app using Oak framework
+A template of Sunbeam Extension app using Oak framework and Deno Deploy
 
 Start the server with the command:
 
