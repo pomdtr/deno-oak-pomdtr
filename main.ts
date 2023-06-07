@@ -8,29 +8,25 @@ router
   .get("/", (context) => {
     context.response.body = {
       type: "list",
-      items: data.map(
-        (dinosaur) =>
-          ({
-            type: "list",
-            title: dinosaur.name,
-            subtitle: dinosaur.description,
-            actions: [
-              {
-                type: "push",
-                page: {
-                  url: `/dinosaur/${dinosaur.name}`,
-                },
-              },
-              { type: "copy", title: "Copy Name", text: dinosaur.name },
-              {
-                type: "copy",
-                title: "Copy Description",
-                text: dinosaur.description,
-              },
-            ],
-          } as Page)
-      ),
-    };
+      items: data.map((dinosaur) => ({
+        title: dinosaur.name,
+        subtitle: dinosaur.description,
+        actions: [
+          {
+            type: "push",
+            page: {
+              url: `/dinosaur/${dinosaur.name}`,
+            },
+          },
+          { type: "copy", title: "Copy Name", text: dinosaur.name },
+          {
+            type: "copy",
+            title: "Copy Description",
+            text: dinosaur.description,
+          },
+        ],
+      })),
+    } as Page;
   })
   .get("/dinosaur/:name", (context) => {
     const { name } = context.params;
