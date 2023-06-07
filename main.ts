@@ -10,6 +10,7 @@ router
       type: "list",
       items: data.map((dinosaur) =>
         sunbeam.Item({
+          id: dinosaur.name,
           title: dinosaur.name,
           subtitle: dinosaur.description,
           actions: [
