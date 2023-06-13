@@ -15,10 +15,11 @@ router
           subtitle: dinosaur.description,
           actions: [
             {
-              type: "push",
-              page: {
+              type: "fetch",
+              request: {
                 url: `/dinosaur/${dinosaur.name}`,
               },
+              onSuccess: "push"
             },
             { type: "copy", title: "Copy Name", text: dinosaur.name },
             {
