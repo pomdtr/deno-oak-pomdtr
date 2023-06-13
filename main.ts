@@ -44,7 +44,7 @@ router
 
     context.response.body = sunbeam.Detail({
       type: "detail",
-      preview: dinosaur.description,
+      preview: {text: dinosaur.description},
       actions: [
         {
           type: "copy",
